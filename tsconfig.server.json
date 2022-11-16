@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "target": "esnext",
+    "module": "commonjs",
+    "strict": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "outDir": "www",
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "types"
+    ]
+  },
+  "include": ["server/*.ts"]
+}
