@@ -9,6 +9,13 @@ export default defineConfig({
   root: resolve(__dirname, './client'),
   build: {
     // 修改构建目录
-    outDir: '../dist'
+    outDir: '../dist/public'
+  },
+  server: {
+    port: 3000,
+    host: '0.0.0.0',
+    proxy: {
+      '/api': 'http://localhost:6001/'
+    }
   }
 })

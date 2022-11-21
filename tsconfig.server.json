@@ -1,21 +1,28 @@
 {
   "compilerOptions": {
     "composite": true,
-    "target": "esnext",
+    "target": "ESNEXT",
     "module": "commonjs",
     "strict": true,
-    "sourceMap": true,
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "outDir": "www",
-    "baseUrl": ".",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": [
-      "node_modules/@types",
-      "types"
-    ]
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": "./",
+    "paths": {
+      "@t/*": ["types/*"]
+    }
   },
-  "include": ["server/*.ts"]
+  "include": [
+    "types/**/*.ts",
+    "types/**/*.d.ts",
+    "server/**/*.ts",
+    "server/**/*.d.ts"
+  ],
+  "exclude": []
 }

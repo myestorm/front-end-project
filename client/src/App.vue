@@ -2,6 +2,9 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import HelloWorld from './components/HelloWorld.vue'
+fetch('/api')
+  .then((response) => response.json())
+  .then((data) => console.log(data));
 </script>
 
 <template>

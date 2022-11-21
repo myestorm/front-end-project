@@ -1,21 +1,8 @@
 {
-  "verbose": false,
-  "debug": false,
-  "exec": "ts-node -r tsconfig-paths/register ./server/app.ts",
+  "watch": ["server"],
+  "ext": "ts,json,html,ejs",
   "ignore": [
-    "node_modules",
-    "./test",
-    "**/*.d.ts",
-    "*.test.ts",
-    "*.spec.ts",
-    "fixtures/*",
-    "test/**/*",
-    "docs/*"
+    "server/**/*.spec.ts"
   ],
-  "events": {
-    "restart": ""
-  },
-  "watch": ["./server"],
-  "ext": "ts",
-  "inspect": true
+  "exec": "ts-node -r tsconfig-paths/register --esm --project tsconfig.server.json ./server/app.ts --files"
 }
