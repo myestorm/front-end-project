@@ -4,5 +4,5 @@
   "ignore": [
     "server/**/*.spec.ts"
   ],
-  "exec": "ts-node -r tsconfig-paths/register --esm --project tsconfig.server.json ./server/app.ts --files"
+  "exec": "cross-env NODE_ENV=dev ts-node -r tsconfig-paths/register --esm --project tsconfig.server.json ./server/app.ts --files"
 }

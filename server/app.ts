@@ -1,14 +1,17 @@
-import { resolve, join } from 'path';
+import { resolve, join } from 'node:path';
 import Koa, { Context, Next } from 'koa';
 import Router from '@koa/router';
 import koaBody from 'koa-body';
 import koaStatic from 'koa-static';
 
 import { IUserType } from '@t/user';
-
+const env = process.env.NODE_ENV;
 const app = new Koa();
+
+const dirs = env === 'dev' ? '../client/public' : '../public';
+
 app.use(koaBody());
-app.use(koaStatic(join(__dirname, '../client/public')));
+app.use(koaStatic(join(__dirname, dirs)));
 
 const router = new Router();
 router.get('/api', (ctx: Context, next: Next) => {
@@ -37,5 +40,7 @@ app.use(async (ctx: Context) => {
   ctx.body = 'Hello World --' + JSON.stringify(userinfo);
 });
 
-app.listen(6001);
+app.listen(6001, () => {
+  console.log('application is running on port 6001');
+});
 console.log(resolve(__dirname, './server'));
