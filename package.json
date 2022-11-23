@@ -34,9 +34,11 @@
   "homepage": "https://github.com/myestorm/front-end-project#readme",
   "dependencies": {
     "@koa/router": "^12.0.0",
+    "dayjs": "^1.11.6",
     "koa": "^2.13.4",
     "koa-body": "^6.0.1",
-    "koa-static": "^5.0.0"
+    "koa-static": "^5.0.0",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/koa": "^2.13.5",

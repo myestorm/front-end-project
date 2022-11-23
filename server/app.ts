@@ -1,29 +1,22 @@
-import { resolve, join } from 'node:path';
+import { join } from 'node:path';
 import Koa, { Context, Next } from 'koa';
 import koaBody from 'koa-body';
 import koaStatic from 'koa-static';
-import koaRoutes from './routes/index';
+import routes from './routes/index';
+import koaBodyConfig, { uploadDir } from './config/koaBody';
 
-import { IUserType } from '@t/user';
 const env = process.env.NODE_ENV;
 const app = new Koa();
-
 const dirs = env === 'dev' ? '../client/public' : '../public';
 
-koaRoutes(app);
-app.use(koaBody());
+// 上传文件
+app.use(koaBody(koaBodyConfig));
+// 静态资源
 app.use(koaStatic(join(__dirname, dirs)));
-
-// const router = new Router();
-// router.get('/api', (ctx: Context, next: Next) => {
-//   ctx.body = {
-//     code: 0,
-//     data: 'data',
-//     msg: 'nothing'
-//   }
-// });
-
-// app.use(router.routes()).use(router.allowedMethods());
+// 多个目录，这里是用来放置上传文件的
+app.use(koaStatic(uploadDir));
+// 注入路由
+app.use(routes.routes()).use(routes.allowedMethods());
 
 app.use(async (ctx: Context, next: Next) => {
   try {
@@ -33,15 +26,6 @@ app.use(async (ctx: Context, next: Next) => {
   }
 });
 
-app.use(async (ctx: Context) => {
-  const userinfo: IUserType = {
-    username: 'ah',
-    nickname: 'nickname'
-  };
-  ctx.body = 'Hello World --' + JSON.stringify(userinfo);
-});
-
 app.listen(6001, () => {
   console.log('application is running on port 6001');
 });
-console.log(resolve(__dirname, './server'));

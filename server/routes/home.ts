@@ -1,6 +1,7 @@
 import { Context, Next } from 'koa';
+import { prefix, get } from '../core/router';
 
-@prefix('')
+@prefix('/api')
 export default class Home {
   @get('/')
   async Home (ctx: Context, next: Next) {

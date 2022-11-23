@@ -1,5 +1,12 @@
-import Router from '@koa/router';
-import Koa from 'koa';
+import KoaRouter from '../core/router';
 
-export default (app: Koa) => {
-};
+import Home from './home';
+import File from './file';
+
+const appRouter = new KoaRouter();
+
+appRouter
+  .mount(Home)
+  .mount(File);
+
+export default appRouter.router;
