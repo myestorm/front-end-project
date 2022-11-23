@@ -9,7 +9,7 @@
     "build": "npm run server-build && npm run client-build",
     "server-dev": "nodemon",
     "server-build": "tsc -p tsconfig.server.json",
-    "server-preview": "cross-env NODE_ENV=prd node ./dist/server/app.js",
+    "server-preview": "npm run build && cross-env NODE_ENV=prd node ./dist/server/app.js",
     "client-dev": "vite",
     "client-build": "vue-tsc --project tsconfig.client.json && vite build --emptyOutDir",
     "client-preview": "vite preview",

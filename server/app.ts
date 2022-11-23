@@ -1,8 +1,8 @@
 import { resolve, join } from 'node:path';
 import Koa, { Context, Next } from 'koa';
-import Router from '@koa/router';
 import koaBody from 'koa-body';
 import koaStatic from 'koa-static';
+import koaRoutes from './routes/index';
 
 import { IUserType } from '@t/user';
 const env = process.env.NODE_ENV;
@@ -10,19 +10,20 @@ const app = new Koa();
 
 const dirs = env === 'dev' ? '../client/public' : '../public';
 
+koaRoutes(app);
 app.use(koaBody());
 app.use(koaStatic(join(__dirname, dirs)));
 
-const router = new Router();
-router.get('/api', (ctx: Context, next: Next) => {
-  ctx.body = {
-    code: 0,
-    data: 'data',
-    msg: 'nothing'
-  }
-});
+// const router = new Router();
+// router.get('/api', (ctx: Context, next: Next) => {
+//   ctx.body = {
+//     code: 0,
+//     data: 'data',
+//     msg: 'nothing'
+//   }
+// });
 
-app.use(router.routes()).use(router.allowedMethods());
+// app.use(router.routes()).use(router.allowedMethods());
 
 app.use(async (ctx: Context, next: Next) => {
   try {
