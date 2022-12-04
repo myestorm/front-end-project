@@ -1,7 +1,13 @@
 import { Context, Next } from 'koa';
-import { prefix, get } from '../core/router';
+import { prefix, get, post } from '../core/router';
+import { cookieTokenName } from '../config/const';
 
-@prefix('/api')
+import type { IUserSigninType } from '@t/user';
+
+import UserController from '../controllers/user';
+const userController = new UserController();
+
+@prefix('')
 export default class Home {
   @get('/')
   async Home (ctx: Context, next: Next) {
@@ -9,9 +15,20 @@ export default class Home {
     await next()
   }
 
-  @get('/demo')
-  async Demo (ctx: Context, next: Next) {
-    ctx.body = 'Demo !!!'
-    await next()
+  @post('/signin')
+  async Signin (ctx: Context, next: Next) {
+    const body = ctx.request.body as unknown as IUserSigninType;
+    const token = await userController.signin(body.username, body.password);
+    ctx.cookies.set(cookieTokenName, token, {
+      maxAge: new Date().getTime() + 24 * 60 * 60 * 1000 * 7,
+      signed: true,
+      httpOnly: true
+    });
+    ctx.body = {
+      code: 0,
+      msg: 'success',
+      token
+    }
+    await next();
   }
 };

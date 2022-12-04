@@ -1,21 +1,19 @@
+import jwt from 'jsonwebtoken';
 import Controller from '../core/controller';
+import { jwtSecret } from '../config/const'
 
 import type { IUserCreateType, IUserUpdateType } from '@t/user';
 
 export default class UserController extends Controller {
   async create (userInfo: IUserCreateType) {
-    try {
-      const prisma = this.prisma;
-      const result = await prisma.user.create({
-        data: {
-          ...userInfo
-        },
-      });
-      return result;
-    } catch (err) {
-      console.log(err);
-      return err;
-    }
+    userInfo.password = this.md5(userInfo.password);
+    const prisma = this.prisma;
+    const result = await prisma.user.create({
+      data: {
+        ...userInfo
+      },
+    });
+    return result;
   }
 
   async delete (id: number) {
@@ -41,5 +39,37 @@ export default class UserController extends Controller {
     const prisma = this.prisma;
     const result = await prisma.user.findMany();
     return result;
+  }
+
+  async signin (username: string, password: string): Promise<string> {
+    const prisma = this.prisma;
+    password = this.md5(password);
+    const result = await prisma.user.findFirst({
+      where: {
+        username,
+        password
+      },
+      select: {
+        uuid: true,
+        username: true,
+        email: true,
+        cellphone: true,
+        nickname: true,
+        avatar: true,
+        status: true
+      }
+    });
+    if (result?.uuid) {
+      const payload = {
+        uuid: result.uuid,
+        username: result.username,
+        cellphone: result.cellphone,
+        email: result.email
+      };
+      const token = jwt.sign(payload, jwtSecret, { expiresIn:  '7d' });
+      return token;
+    } else {
+      return '';
+    }
   }
 };

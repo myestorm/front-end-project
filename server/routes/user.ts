@@ -1,6 +1,8 @@
 import { Context, Next } from 'koa';
 import { prefix, post, get, put, del } from '../core/router';
 
+import type { IUserCreateType } from '@t/user';
+
 import UserController from '../controllers/user';
 const userController = new UserController();
 
@@ -8,11 +10,8 @@ const userController = new UserController();
 export default class User {
   @post('/create')
   async Create (ctx: Context, next: Next) {
-    const data = await userController.create({
-      username: 'username',
-      nickname: 'nickname',
-      email: 'test1@demo.com'
-    });
+    const body = ctx.request.body as unknown as IUserCreateType;
+    const data = await userController.create(body);
     ctx.body = {
       code: 0,
       msg: 'success',

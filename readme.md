@@ -6,6 +6,7 @@
 git clone https://github.com/myestorm/front-end-project.git
 cd front-end-project
 npm install -d
+npx prisma generate
 ```
 
 ## 开发
