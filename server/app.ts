@@ -13,7 +13,7 @@ const app = new Koa();
 const dirs = env === 'dev' ? '../client/public' : '../public';
 
 // array of signed cookie keys
-app.keys = ['front-end-project', 'totonoo.com'];
+app.keys = CONST.koaKeys;
 // 注入全局配置
 app.use(config(CONST));
 // 通用错误处理
