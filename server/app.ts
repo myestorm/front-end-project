@@ -30,7 +30,7 @@ app.use(async (ctx: Context, next: Next) => {
 app.use(config(CONST));
 // 权限认证
 app.use(authorization({
-  blacklist: ['/user/*'] // 黑名单模式，匹配黑名单一律验证，否则不验证
+  blacklist: ['/user/*', '/userinfo'] // 黑名单模式，匹配黑名单一律验证，否则不验证
 }));
 // 上传文件
 app.use(koaBody(koaBodyConfig));

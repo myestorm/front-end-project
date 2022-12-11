@@ -31,4 +31,19 @@ export default class Home {
     }
     await next();
   }
+
+  @get('/userinfo')
+  async Userinfo (ctx: Context, next: Next) {
+    const userinfo = ctx.state.userinfo;
+    const token = ctx.state.token || ctx.cookies.get(cookieTokenName) || '';
+    ctx.body = {
+      code: 0,
+      msg: 'success',
+      data: {
+        userinfo,
+        token
+      }
+    };
+    await next();
+  }
 };
